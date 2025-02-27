@@ -5,7 +5,7 @@ After=network.target
 Wants=network.target
 
 [Service]
-Type=Simple
+Type=simple
 WorkingDirectory=/opt/cobaltstrike
 ExecStart=/opt/cobaltstrike/teamserver <TEAMSERVER IP> <PASSWORD> <PATH TO C2 PROFILE>
 
