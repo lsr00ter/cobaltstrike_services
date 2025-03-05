@@ -12,13 +12,13 @@ These scripts have been tested on Ubuntu server, and will need to be adjusted ba
 ## Steps
 
 - Update the service files to match your environment.
-  - teamserver.service
-  - listener.service
-  - listener_service.cna
+  - `teamserver.service`
+  - `listener.service`
+  - `listener_service.cna`
 - Copy the service files to your teamserver
-  - /etc/systemd/system/teamserver.service
-  - /etc/systemd/system/listener.service
-  - /etc/cobaltstrike/listener_service.cna
+  - `/etc/systemd/system/teamserver.service`
+  - `/etc/systemd/system/listener.service`
+  - `/etc/cobaltstrike/listener_service.cna`
 - Register the new services
   - `systemctl daemon-reload`
 - Start the services
@@ -33,8 +33,7 @@ Update the settings to match your environment.
 - WorkingDirectory: set to the cobaltstrike directory
 - ExecStart: Set with your values
 
-```
-
+```conf
 # teamserver.service
 [Unit]
 Description=Cobalt Strike Teamserver Service
@@ -51,7 +50,6 @@ ExecStart=/opt/cobaltstrike/teamserver <TEAMSERVER IP> <PASSWORD> <PATH TO C2 PR
 
 [Install]
 WantedBy=multi-user.target
-
 ```
 
 ## Listener Service
@@ -61,7 +59,7 @@ Update the settings to match your environment.
 - WorkingDirectory: set to the cobaltstrike directory
 - ExecStart: Set with your values
 
-```
+```conf
 # listener.service
 [Unit]
 Description=Cobalt Strike aggressor service
@@ -79,14 +77,13 @@ ExecStart=/bin/bash /opt/cobaltstrike/agscript 127.0.0.1 50050 <USER to LOGON TO
 # Example
 # ExecStart=/bin/bash /opt/cobaltstrike/agscript 127.0.0.1 50050 listener_service thisismypassword /opt/cobaltstrike/listener_service.cna
 
-
 [Install]
 WantedBy=multi-user.target
 ```
 
 ## Headless aggressor script
 
-This must be updated to reflect your environment. 
+This must be updated to reflect your environment.
 
 This example aggressor script is used to start an HTTP, HTTPS, and SMB listener with all the needed parameters
 
@@ -100,11 +97,11 @@ What to change?
   - Listnername
   - host
   - althost
+
 - SMB Listener
-  - 
+  -
 
-
-```
+```java
 println("
 ###################################################################
  CobaltStrike Aggressor Script          
@@ -116,13 +113,13 @@ println('Loading listener_service.cna...');
 
 on ready{
     println('listener_service.cna: Creating HTTP Listener...');
-	listener_create_ext("HTTP", "windows/beacon_http/reverse_http", %(host => "iheartredteams.com", port => 80, beacons => "iheartredteams.com", althost => "iheartredteams.com", bindto => 80));
+ listener_create_ext("HTTP", "windows/beacon_http/reverse_http", %(host => "iheartredteams.com", port => 80, beacons => "iheartredteams.com", althost => "iheartredteams.com", bindto => 80));
 
     println('listener_service.cna: Creating HTTPS Listener...');
-	listener_create_ext("HTTPS", "windows/beacon_https/reverse_https", %(host => "iheartredteams.com", port => 443, beacons => "iheartredteams.com", althost => "iheartredteams.com", bindto => 443));
+ listener_create_ext("HTTPS", "windows/beacon_https/reverse_https", %(host => "iheartredteams.com", port => 443, beacons => "iheartredteams.com", althost => "iheartredteams.com", bindto => 443));
 
     println('listener_service.cna: Creating SMB Listener...');
-	listener_create_ext("SMB", "windows/beacon_bind_pipe", %(port => "mojo.5887.8051.34782273429370473##"));
-	sleep(10000);
+ listener_create_ext("SMB", "windows/beacon_bind_pipe", %(port => "mojo.5887.8051.34782273429370473##"));
+ sleep(10000);
 }
 ```

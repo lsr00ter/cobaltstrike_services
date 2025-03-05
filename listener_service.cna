@@ -18,4 +18,3 @@ on ready{
 	listener_create_ext("SMB", "windows/beacon_bind_pipe", %(port => "mojo.5887.8051.34782273429370473##"));
 	sleep(10000);
 }
-
